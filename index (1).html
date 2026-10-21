@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#101010">
+<meta name="description" content="SAINT X — Marketplace de tecnologia, games, produtos digitais e muito mais.">
+<meta property="og:title" content="SAINT X — Marketplace">
+<meta property="og:description" content="Tecnologia, games, produtos digitais e muito mais.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23101010'/%3E%3Ccircle cx='16' cy='16' r='7' fill='%23d7ff38'/%3E%3C/svg%3E">
+<title>SAINT X — Marketplace</title>
+<link rel="preconnect" href="https://sketchfab.com" crossorigin>
+<link rel="preconnect" href="https://static.sketchfab.com" crossorigin>
+<link rel="preconnect" href="https://media.sketchfab.com" crossorigin>
+<script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+<style>
+:root{--bg:#101010;--panel:#181818;--panel2:#202020;--text:#f5f5f5;--muted:#999;--accent:#d7ff38;--border:rgba(255,255,255,.09)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+body.locked{overflow:hidden}
+button,input,select{font:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+a{color:inherit}
+button:disabled{opacity:.45;cursor:not-allowed}
+img{max-width:100%}
+header{position:sticky;top:0;z-index:20;background:rgba(16,16,16,.94);backdrop-filter:blur(18px);border-bottom:1px solid var(--border)}
+.topbar{max-width:1440px;min-height:76px;margin:auto;padding:14px 5%;display:flex;align-items:center;gap:24px}
+.logo{border:0;background:none;color:var(--text);font-size:27px;font-weight:950;letter-spacing:-1.8px;white-space:nowrap}
+.logo span{color:var(--accent)}
+.search{flex:1;display:flex;align-items:center;gap:10px;max-width:650px;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:0 14px}
+.search input{width:100%;min-width:0;padding:13px 0;border:0;outline:none;color:#fff;background:transparent}
+.search input:focus-visible{outline:none}
+.header-actions{display:flex;gap:10px;margin-left:auto}
+.btn{border:1px solid var(--border);color:var(--text);background:var(--panel2);border-radius:11px;padding:11px 15px;font-weight:750;transition:transform .15s,background .15s}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{background:var(--accent);color:#101010;border-color:var(--accent)}
+.btn-quiet{background:transparent}
+.cart-count{display:inline-flex;min-width:20px;height:20px;align-items:center;justify-content:center;margin-left:5px;border-radius:99px;background:var(--accent);color:#101010;font-size:12px;font-weight:900}
+main{max-width:1440px;margin:auto;padding:0 5% 60px}
+.hero{margin:32px 0 30px;min-height:300px;padding:clamp(25px,5vw,64px);border:1px solid var(--border);border-radius:26px;background:radial-gradient(ellipse at 85% 25%,rgba(215,255,56,.17),transparent 32%),linear-gradient(120deg,#202020,#111 70%);display:flex;align-items:center;overflow:hidden}
+.hero-content{max-width:690px}
+.eyebrow{color:var(--accent);font-size:12px;font-weight:900;letter-spacing:2px;text-transform:uppercase}
+.hero h1{margin:15px 0;font-size:clamp(36px,6vw,70px);line-height:.98;letter-spacing:-3px}
+.hero h1 span{color:var(--accent)}
+.hero p{color:#b9b9b9;line-height:1.7;max-width:530px}
+.hero-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:23px}
+.section-heading{display:flex;align-items:end;justify-content:space-between;gap:15px;margin:35px 0 18px}
+.section-heading h2{margin:0;font-size:24px;letter-spacing:-.6px}
+.section-heading p{margin:7px 0 0;color:var(--muted);font-size:13px}
+.category-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
+.category{min-width:0;padding:18px 10px;border:1px solid var(--border);border-radius:15px;color:var(--text);background:var(--panel);text-align:center;transition:border-color .2s,transform .2s}
+.category:hover,.category.active{border-color:var(--accent);transform:translateY(-2px)}
+.category.active{background:#22271a}
+.category-icon{font-size:27px;display:block;margin-bottom:10px}
+.category-name{font-size:12px;font-weight:800;line-height:1.4}
+.catalog-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:25px 0 18px}
+.catalog-toolbar select{color:var(--text);background:var(--panel);border:1px solid var(--border);padding:11px;border-radius:10px;max-width:100%}
+.product-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.product-card{min-width:0;overflow:hidden;border:1px solid var(--border);border-radius:17px;background:var(--panel);cursor:pointer;transition:transform .2s,border-color .2s}
+.product-card:hover{transform:translateY(-3px);border-color:#555}
+.product-art{position:relative;display:flex;align-items:center;justify-content:center;aspect-ratio:1.15/1;padding:20px;background:radial-gradient(circle at 50% 40%,rgba(215,255,56,.09),transparent 55%),#1d1d1d}
+.product-art .emoji{font-size:clamp(45px,6vw,76px);filter:drop-shadow(0 12px 15px #0007)}
+.art-label{position:absolute;top:12px;left:12px;z-index:1;padding:6px 8px;border:1px solid var(--border);border-radius:7px;background:#111b;color:var(--accent);font-size:10px;font-weight:900;text-transform:uppercase}
+.product-card.hero-card{border-color:rgba(215,255,56,.35);box-shadow:0 0 40px rgba(215,255,56,.08)}
+.hero-card .product-art{background:radial-gradient(circle at 50% 45%,rgba(215,255,56,.32),transparent 62%),radial-gradient(circle at 50% 100%,rgba(215,255,56,.12),transparent 50%),#161616}
+.hero-card .product-art svg,.hero-card .product-art img{width:94%;max-height:100%;object-fit:contain;animation:float 4s ease-in-out infinite;filter:drop-shadow(0 18px 20px rgba(0,0,0,.6)) drop-shadow(0 0 16px rgba(215,255,56,.35))}
+@keyframes float{50%{transform:translateY(-8px) rotate(-2deg)}}
+.product-info{padding:15px}
+.product-category{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.7px}
+.product-info h3{min-height:40px;margin:8px 0 12px;font-size:15px;line-height:1.35}
+.price{font-size:21px;font-weight:900;letter-spacing:-.6px}
+.subprice{margin-top:5px;color:var(--muted);font-size:11px}
+.product-buttons{display:flex;gap:8px;margin-top:15px}
+.product-buttons button{flex:1;padding:10px 8px;font-size:12px}
+.empty-state{grid-column:1/-1;text-align:center;padding:50px 20px;border:1px dashed #444;border-radius:16px;color:var(--muted)}
+.benefits{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:35px 0}
+.benefit{border:1px solid var(--border);border-radius:15px;padding:20px;background:var(--panel)}
+.benefit strong{display:block;margin-bottom:7px}
+.benefit p{margin:0;color:var(--muted);font-size:13px;line-height:1.6}
+footer{border-top:1px solid var(--border);padding:28px 5%;color:var(--muted);font-size:12px}
+.footer-inner{max-width:1440px;margin:auto;display:flex;justify-content:space-between;flex-wrap:wrap;gap:15px}
+
+/* MODAIS */
+.overlay{position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(0,0,0,.78);backdrop-filter:blur(7px)}
+.overlay.open{display:flex}
+.modal{position:relative;width:min(980px,100%);max-height:92dvh;overflow:auto;border:1px solid #333;border-radius:22px;background:#151515;box-shadow:0 25px 100px #0009}
+#productOverlay.open .modal{animation:rise .45s cubic-bezier(.2,.8,.2,1)}
+@keyframes rise{from{opacity:0;transform:translateY(18px) scale(.97)}}
+.modal-head{position:sticky;top:0;z-index:3;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:15px 20px;background:rgba(21,21,21,.96);border-bottom:1px solid var(--border)}
+.modal-head strong{letter-spacing:.5px}
+.close-btn{width:38px;height:38px;border:1px solid var(--border);border-radius:10px;color:#fff;background:#252525;font-size:21px}
+.product-detail{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:24px;padding:22px}
+.detail-visual{min-width:0}
+.viewer-shell{position:relative;width:100%;height:430px;min-height:300px;overflow:hidden;border:1px solid rgba(215,255,56,.18);border-radius:16px;background:radial-gradient(circle at 50% 45%,rgba(215,255,56,.1),transparent 60%),#141414}
+.viewer-shell iframe{position:relative;z-index:2;display:block;width:100%;height:100%;min-height:300px;border:0;background:transparent}
+.viewer-loading{position:absolute;z-index:1;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;padding:20px;color:#bbb;text-align:center;pointer-events:none}
+.spinner{width:27px;height:27px;border-radius:50%;background:var(--accent);box-shadow:0 0 24px rgba(215,255,56,.5);animation:pulse 1s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(.4)}50%{transform:scale(1)}}
+.viewer-links{margin-top:10px}
+.viewer-links a{color:var(--accent);font-size:12px;text-decoration:none}
+.detail-copy{min-width:0}
+.detail-copy h2{margin:10px 0;font-size:clamp(23px,3vw,34px);line-height:1.1}
+.detail-description{color:#aaa;font-size:13px;line-height:1.7}
+.detail-price{margin:17px 0 6px;font-size:30px;font-weight:950}
+.detail-label{display:block;margin:20px 0 9px;font-size:12px;font-weight:800}
+.swatches{display:flex;flex-wrap:wrap;gap:9px}
+.swatch{padding:10px 12px;border:1px solid #444;border-radius:10px;color:#fff;background:#222;font-size:12px}
+.swatch.active{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.quantity-row{display:flex;align-items:center;gap:12px}
+.quantity-row input{width:86px;padding:11px;border:1px solid #444;border-radius:9px;background:#222;color:#fff}
+.detail-copy .add-button{width:100%;margin-top:18px;padding:14px}
+.disclaimer{margin-top:12px;color:#777;font-size:11px;line-height:1.5}
+
+/* CARRINHO */
+.cart-modal{width:min(560px,100%)}
+.cart-body{padding:20px}
+.cart-line{display:grid;grid-template-columns:55px minmax(0,1fr) auto;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--border)}
+.cart-thumb{display:grid;place-items:center;width:55px;height:55px;border-radius:10px;background:#252525;font-size:26px}
+.cart-line h4{margin:0 0 5px;font-size:13px}
+.cart-line p{margin:0;color:var(--muted);font-size:11px;line-height:1.5}
+.line-price{text-align:right;font-weight:800;font-size:13px}
+.remove-item{margin-top:5px;border:0;padding:0;color:#aaa;background:none;font-size:11px;text-decoration:underline}
+.cart-total{display:flex;justify-content:space-between;gap:12px;margin:20px 0;font-size:18px;font-weight:900}
+.cart-note{color:#888;font-size:12px;line-height:1.6}
+.cart-actions{display:flex;gap:10px;margin-top:15px}
+.cart-actions button{flex:1}
+.toast{position:fixed;z-index:100;bottom:20px;left:50%;transform:translate(-50%,20px);width:max-content;max-width:calc(100% - 30px);padding:13px 18px;border:1px solid #4a5b20;border-radius:12px;color:#fff;background:#242a19;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;font-size:13px}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+model-viewer{position:relative;z-index:2;display:block;width:100%;height:100%;min-height:300px;background:transparent;--poster-color:transparent}
+.mv-progress{position:absolute;left:0;right:0;bottom:0;height:3px;background:rgba(255,255,255,.06)}
+.mv-progress i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}
+
+/* TELA DE CARREGAMENTO: bolinha verde-limão abre e fecha 2x */
+#loader{position:fixed;inset:0;z-index:300;display:grid;place-items:center;background:#101010;opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s}
+#loader.on{opacity:1;visibility:visible}
+#loader i{width:72px;height:72px;border-radius:50%;background:var(--accent);box-shadow:0 0 55px rgba(215,255,56,.55);transform:scale(0)}
+#loader.on i{animation:blink .7s ease-in-out 2}
+@keyframes blink{0%,100%{transform:scale(0)}50%{transform:scale(1)}}
+
+
+/* ÍCONES EM CONTORNO (silhueta, sem preenchimento) */
+.ico{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.category-icon{display:grid;place-items:center;margin-bottom:10px}
+.category-icon .ico{width:28px;height:28px}
+.icon-btn{display:inline-grid;place-items:center;width:42px;height:42px;padding:0;border:1px solid transparent;border-radius:11px;color:var(--text);background:transparent;transition:color .15s,background .15s,transform .12s}
+.icon-btn:hover{color:var(--accent);background:rgba(255,255,255,.06)}
+/* FEEDBACK AO TOCAR / PASSAR O MOUSE */
+button:active,.product-card:active{transform:scale(.97)}
+.category:active{border-color:var(--accent)}
+/* MENU LATERAL + PAINÉIS */
+.drawer{position:fixed;top:0;left:0;bottom:0;z-index:60;width:min(280px,82vw);padding:18px;background:#151515;border-right:1px solid #333;transform:translateX(-102%);transition:transform .25s ease;display:flex;flex-direction:column;gap:6px}
+.drawer.open{transform:none}
+.drawer-shade{position:fixed;inset:0;z-index:55;background:rgba(0,0,0,.6);opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s}
+.drawer-shade.open{opacity:1;visibility:visible}
+.drawer h3{margin:6px 6px 14px;font-size:20px;font-weight:950;letter-spacing:-1px}
+.drawer h3 span{color:var(--accent)}
+.drawer-item{display:flex;align-items:center;gap:12px;padding:13px 12px;border:0;border-radius:11px;color:var(--text);background:transparent;text-align:left;font-weight:700;transition:background .15s,color .15s}
+.drawer-item:hover{background:rgba(255,255,255,.07);color:var(--accent)}
+.panel-body{padding:20px;display:grid;gap:12px}
+.switch-row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px;border:1px solid var(--border);border-radius:12px;background:var(--panel)}
+.switch{position:relative;width:46px;height:26px;flex:none}
+.switch input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer}
+.switch i{position:absolute;inset:0;border:1.5px solid #666;border-radius:99px;transition:border-color .2s}
+.switch i::after{content:"";position:absolute;top:3px;left:3px;width:17px;height:17px;border-radius:50%;border:1.5px solid #888;transition:transform .2s,border-color .2s}
+.switch input:checked+i{border-color:var(--accent)}
+.switch input:checked+i::after{transform:translateX(20px);border-color:var(--accent)}
+.panel-body textarea{width:100%;min-height:110px;padding:12px;border:1px solid #444;border-radius:11px;background:#222;color:#fff;resize:vertical;font:inherit}
+.panel-body p{margin:0;color:var(--muted);font-size:13px;line-height:1.6}
+.bottom-bar{position:fixed;left:0;right:0;bottom:0;z-index:25;display:flex;justify-content:center;padding:6px 0 calc(6px + env(safe-area-inset-bottom));background:rgba(16,16,16,.94);backdrop-filter:blur(18px);border-top:1px solid var(--border)}
+.bottom-bar button{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:84px;padding:6px 14px;border:0;border-radius:10px;color:var(--text);background:transparent;font-size:11px;font-weight:700}
+.bottom-bar button:hover{color:var(--accent)}
+body{padding-bottom:64px}
+.toast{bottom:78px}
+/* SELETOR DE COR DO 3D */
+.color-pop{position:absolute;z-index:6;display:none;gap:9px;padding:9px;border:1px solid #444;border-radius:99px;background:rgba(21,21,21,.95);transform:translate(-50%,-120%)}
+.color-pop.open{display:flex;animation:rise .25s ease}
+.color-pop button{width:26px;height:26px;padding:0;border-radius:50%;border:2px solid #fff6}
+.color-pop button.active{border-color:var(--accent);box-shadow:0 0 0 2px #0008}
+@media(max-width:1050px){
+.product-grid,.category-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.product-detail{grid-template-columns:1fr 1fr;gap:16px}
+.viewer-shell{height:370px}}
+@media(max-width:680px){
+.topbar{padding:12px 4%;gap:10px;flex-wrap:wrap}
+.logo{font-size:24px}
+.search{order:3;flex-basis:100%;max-width:none}
+.header-actions{margin-left:auto}
+.header-actions .btn{padding:9px 10px;font-size:12px}
+main{padding:0 4% 40px}
+.hero{margin-top:20px;min-height:260px;padding:27px 22px;border-radius:20px}
+.hero h1{letter-spacing:-2px}
+.category-grid{gap:8px}
+.category{padding:14px 6px}
+.category-icon{font-size:23px}
+.category-name{font-size:10px}
+.product-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.product-info{padding:11px}
+.product-info h3{font-size:13px;min-height:35px}
+.price{font-size:18px}
+.product-buttons{flex-direction:column}
+.product-buttons button{width:100%}
+.benefits{grid-template-columns:1fr}
+.section-heading h2{font-size:21px}
+.overlay{padding:0;align-items:flex-end}
+.modal{width:100%;max-height:96dvh;border-radius:20px 20px 0 0}
+.product-detail{grid-template-columns:1fr;padding:14px;gap:18px}
+.viewer-shell{height:min(72vw,380px);min-height:270px}
+.viewer-shell iframe{min-height:270px}
+.detail-copy h2,.detail-price{font-size:27px}
+.modal-head{padding:12px 15px}
+.cart-modal{max-height:90dvh}
+footer{padding:24px 4%}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+</style>
+</head>
+
+<body>
+<noscript><p style="padding:20px;text-align:center">Ative o JavaScript para ver a loja.</p></noscript>
+<header>
+  <div class="topbar">
+    <button class="icon-btn" id="menuBtn" aria-label="Abrir menu"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    <button class="logo" onclick="goHome()" aria-label="SAINT X início">SAINT <span>X</span></button>
+    <label class="search">
+      <span aria-hidden="true">⌕</span>
+      <input id="searchInput" type="search" placeholder="Buscar produtos, games, tecnologia..." autocomplete="off">
+    </label>
+    <div class="header-actions">
+      <button class="btn btn-quiet" onclick="showCart()">Carrinho <span class="cart-count" id="cartCount">0</span></button>
+    </div>
+  </div>
+</header>
+
+<main id="home">
+  <section class="hero">
+    <div class="hero-content">
+      <div class="eyebrow">Seu próximo nível começa aqui</div>
+      <h1>O universo de compras.<br><span>Em um só lugar.</span></h1>
+      <p>Tecnologia, games, produtos digitais e muito mais. Explore o catálogo da SAINT X.</p>
+      <div class="hero-actions">
+        <button class="btn btn-primary" onclick="document.getElementById('catalog').scrollIntoView({behavior:'smooth'})">Explorar catálogo ↗</button>
+        <button class="btn" onclick="selectCategory('Games e consoles')">Ver games</button>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="categoriesTitle">
+    <div class="section-heading">
+      <div><h2 id="categoriesTitle">Explore por categoria</h2><p>Encontre exatamente o que procura.</p></div>
+    </div>
+    <div class="category-grid" id="categoryGrid"></div>
+  </section>
+
+  <section id="catalog">
+    <div class="section-heading">
+      <div><h2 id="catalogTitle">Produtos em destaque</h2><p id="resultsText">Explore as escolhas da SAINT X.</p></div>
+    </div>
+    <div class="catalog-toolbar">
+      <button class="btn btn-quiet" onclick="goHome()">↺ Ver tudo</button>
+      <select id="sortSelect" aria-label="Ordenar produtos">
+        <option value="featured">Em destaque</option>
+        <option value="low">Menor preço</option>
+        <option value="high">Maior preço</option>
+        <option value="az">Nome A–Z</option>
+      </select>
+    </div>
+    <div class="product-grid" id="productGrid"></div>
+  </section>
+
+  <section class="benefits" aria-label="Informações da loja">
+    <div class="benefit"><strong>✦ Catálogo organizado</strong><p>Categorias dedicadas para facilitar a navegação entre diferentes tipos de produtos.</p></div>
+    <div class="benefit"><strong>◈ Experiência interativa</strong><p>Confira detalhes, selecione opções e adicione produtos ao carrinho demonstrativo.</p></div>
+    <div class="benefit"><strong>⌘ Design responsivo</strong><p>Interface adaptada a celulares, tablets e computadores.</p></div>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div><strong style="color:#fff">SAINT <span style="color:var(--accent)">X</span></strong> — Marketplace</div>
+    <div>© <span id="year"></span> SAINT X. Todos os direitos reservados.</div>
+    <div>Protótipo de loja — pagamentos ainda não integrados.</div>
+  </div>
+</footer>
+
+<!-- DETALHES DO PRODUTO -->
+<div class="overlay" id="productOverlay" role="dialog" aria-modal="true" aria-label="Detalhes do produto" data-overlay>
+  <div class="modal">
+    <div class="modal-head">
+      <strong>SAINT <span style="color:var(--accent)">X</span> / PRODUTO</strong>
+      <button class="close-btn" data-close="productOverlay" aria-label="Fechar">×</button>
+    </div>
+    <div class="product-detail" id="productDetail"></div>
+  </div>
+</div>
+
+<!-- CARRINHO -->
+<div class="overlay" id="cartOverlay" role="dialog" aria-modal="true" aria-label="Carrinho de compras" data-overlay>
+  <div class="modal cart-modal">
+    <div class="modal-head">
+      <strong>SEU CARRINHO</strong>
+      <button class="close-btn" data-close="cartOverlay" aria-label="Fechar">×</button>
+    </div>
+    <div class="cart-body" id="cartBody"></div>
+  </div>
+</div>
+
+<div id="loader" aria-hidden="true"><i></i></div>
+<div class="drawer-shade" id="drawerShade"></div>
+<aside class="drawer" id="drawer" aria-label="Menu">
+  <h3>SAINT <span>X</span></h3>
+  <button class="drawer-item" data-panel="settings"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/></svg>Configurações</button>
+  <button class="drawer-item" data-panel="account"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>Conta</button>
+  <button class="drawer-item" data-panel="support"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/></svg>Suporte</button>
+</aside>
+<div class="overlay" id="panelOverlay" role="dialog" aria-modal="true" data-overlay>
+  <div class="modal cart-modal">
+    <div class="modal-head"><strong id="panelTitle"></strong><button class="close-btn" data-close="panelOverlay" aria-label="Fechar">×</button></div>
+    <div class="panel-body" id="panelBody"></div>
+  </div>
+</div>
+<nav class="bottom-bar" aria-label="Conta">
+  <button data-panel="account" aria-label="Conta"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>Conta</button>
+</nav>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+"use strict";
+/*
+  SAINT X — protótipo front-end.
+  O carrinho usa localStorage neste navegador. Para vender de verdade é
+  preciso backend, estoque, autenticação, banco de dados e pagamentos.
+*/
+
+const SKETCHFAB_ID = "dea9a2e9350a48a9a32b3a57b4df8329";
+const SKETCHFAB_EMBED = "https://sketchfab.com/models/" + SKETCHFAB_ID +
+  "/embed?autostart=1&preload=1&ui_theme=dark&ui_infos=0&ui_inspector=0&ui_watermark=0&transparent=1&autospin=0.4&dnt=1";
+const SKETCHFAB_PAGE =
+  "https://sketchfab.com/3d-models/sony-dualsensetm-playstation-5-3ds-max-corona-" + SKETCHFAB_ID;
+const BLINK_MS = 1450; // 2 piscadas de 0,7s
+const REDUCE_MOTION = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+const svg = p => `<svg class="ico" viewBox="0 0 24 24" aria-hidden="true">${p}</svg>`;
+const categories = [
+  {name:"Todos",icon:svg('<rect x="4" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5"/>')},
+  {name:"Games e consoles",icon:svg('<path d="M7 8h10c3 0 4.5 4 4 8-.3 2-2.5 2.5-3.5 1L15.5 14h-7L6.5 17c-1 1.500-3.200 1-3.500-1-.5-4 1-8 4-8z"/><path d="M8 10.500v2M7 11.500h2"/>')},
+  {name:"Eletrônicos",icon:svg('<rect x="7" y="7" width="10" height="10" rx="2"/><path d="M10 3v4M14 3v4M10 17v4M14 17v4M3 10h4M3 14h4M17 10h4M17 14h4"/>')},
+  {name:"Gift cards",icon:svg('<rect x="4" y="9" width="16" height="11" rx="1.5"/><path d="M3 9h18v-3H3zM12 6v14M12 6C9 6 8 3 10 3s2 3 2 3zM12 6c3 0 4-3 2-3s-2 3-2 3z"/>')},
+  {name:"Skins e itens digitais",icon:svg('<path d="M12 3l8 6-8 12L4 9z"/><path d="M4 9h16M9 9l3 12M15 9l-3 12"/>')},
+  {name:"Casa e eletrodomésticos",icon:svg('<path d="M4 11l8-7 8 7M6 10v10h12V10"/><path d="M10 20v-5h4v5"/>')},
+  {name:"Moda e acessórios",icon:svg('<path d="M9 4l-6 3 2 4 2-1v10h10V10l2 1 2-4-6-3c-.5 1.500-1.500 2-3 2S9.500 5.500 9 4z"/>')}
+];
+
+const products = [
+  {id:"dualsense",name:"Controle Sony DualSense PS5",category:"Games e consoles",price:449.90,emoji:"🎮",tag:"Modelo 3D",
+   description:"Controle sem fio DualSense para PlayStation 5. Explore a visualização 3D interativa e escolha a variante desejada.",
+   colors:["Branco e preto","Preto","Vermelho","Azul"],hex:{"Branco e preto":"#ececeb","Preto":"#1a1a1d","Vermelho":"#d4262e","Azul":"#2563eb"},model3d:true,hero:true,
+   glb:"dual-sense2.glb", /* se o .glb não existir, usa o Sketchfab */
+   image:"" /* coloque aqui a URL de uma foto real para trocar a ilustração */},
+  {id:"headset",name:"Headset gamer",category:"Games e consoles",price:249.90,emoji:"🎧",tag:"Gaming",description:"Headset para suas sessões de jogos. Produto demonstrativo: confirme as especificações da versão real antes da compra."},
+  {id:"keyboard",name:"Teclado mecânico RGB",category:"Games e consoles",price:299.90,emoji:"⌨️",tag:"Setup",description:"Teclado mecânico para montar seu setup gamer."},
+  {id:"mouse",name:"Mouse gamer",category:"Games e consoles",price:159.90,emoji:"🖱️",tag:"Setup",description:"Mouse para jogos e uso cotidiano."},
+  {id:"phone",name:"Smartphone",category:"Eletrônicos",price:1299.90,emoji:"📱",tag:"Tecnologia",description:"Categoria de smartphones. Confira modelo, armazenamento e garantia antes de uma compra real."},
+  {id:"earbuds",name:"Fone sem fio",category:"Eletrônicos",price:189.90,emoji:"🎧",tag:"Wireless",description:"Fones sem fio para música e chamadas."},
+  {id:"monitor",name:"Monitor para setup",category:"Eletrônicos",price:899.90,emoji:"🖥️",tag:"Setup",description:"Monitor para trabalho, estudo ou jogos. As especificações finais devem ser cadastradas pelo vendedor."},
+  {id:"gift-50",name:"Gift card digital — R$ 50",category:"Gift cards",price:50,emoji:"🎁",tag:"Digital",description:"Produto digital demonstrativo. Plataforma, região, validade e forma de entrega precisam ser definidos no cadastro real."},
+  {id:"gift-100",name:"Gift card digital — R$ 100",category:"Gift cards",price:100,emoji:"🎟️",tag:"Digital",description:"Cartão-presente digital demonstrativo. Nenhum código é emitido por este protótipo."},
+  {id:"skin-cs",name:"Skin de CS2 — catálogo",category:"Skins e itens digitais",price:39.90,emoji:"🔫",tag:"Item digital",description:"Espaço demonstrativo para itens digitais. A venda real depende de um método de entrega legítimo e compatível com as regras da plataforma."},
+  {id:"game-key",name:"Jogo digital — catálogo",category:"Skins e itens digitais",price:89.90,emoji:"🕹️",tag:"Digital",description:"Espaço para jogos digitais. Plataforma, região e condições de ativação devem ser informadas pelo vendedor."},
+  {id:"airfryer",name:"Air fryer",category:"Casa e eletrodomésticos",price:399.90,emoji:"🍟",tag:"Casa",description:"Categoria de eletrodomésticos. Capacidade, potência, voltagem e garantia devem ser confirmadas no anúncio real."},
+  {id:"coffee",name:"Cafeteira elétrica",category:"Casa e eletrodomésticos",price:229.90,emoji:"☕",tag:"Casa",description:"Cafeteira para o dia a dia. Produto ilustrativo do catálogo."},
+  {id:"shirt",name:"Camiseta streetwear",category:"Moda e acessórios",price:119.90,emoji:"👕",tag:"Streetwear",description:"Categoria de moda. Tamanhos, composição e cores devem ser cadastrados para o produto real."},
+  {id:"watch",name:"Relógio casual",category:"Moda e acessórios",price:279.90,emoji:"⌚",tag:"Acessórios",description:"Relógio casual para complementar seu estilo."}
+];
+
+const DUALSENSE_SVG = `<svg viewBox="0 0 240 160" role="img" aria-label="Controle DualSense" xmlns="http://www.w3.org/2000/svg">
+<path d="M62 36C84 26 156 26 178 36C206 46 224 96 214 124C208 142 188 144 176 128C166 114 160 108 148 108L92 108C80 108 74 114 64 128C52 144 32 142 26 124C16 96 34 46 62 36Z" fill="#f2f2f2"/>
+<path d="M66 38C100 28 140 28 174 38C150 60 90 60 66 38Z" fill="#17171c"/>
+<path d="M76 45C110 59 130 59 164 45" fill="none" stroke="#d7ff38" stroke-width="3" stroke-linecap="round"/>
+<rect x="100" y="42" width="40" height="17" rx="6" fill="#2b2b33"/>
+<circle cx="92" cy="88" r="12" fill="#1c1c22"/><circle cx="92" cy="88" r="6" fill="#33333c"/>
+<circle cx="148" cy="88" r="12" fill="#1c1c22"/><circle cx="148" cy="88" r="6" fill="#33333c"/>
+<path d="M58 66h12M64 60v12" stroke="#1c1c22" stroke-width="5" stroke-linecap="round"/>
+<circle cx="176" cy="60" r="4" fill="#1c1c22"/><circle cx="176" cy="74" r="4" fill="#1c1c22"/>
+<circle cx="169" cy="67" r="4" fill="#1c1c22"/><circle cx="183" cy="67" r="4" fill="#1c1c22"/></svg>`;
+
+let activeCategory = "Todos";
+let selectedProduct = null;
+let selectedColor = "";
+let cart = loadCart();
+let toastTimeout, lastFocus = null, opening = false;
+
+const $ = selector => document.querySelector(selector);
+const money = value => Number(value).toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
+const safeText = value => String(value).replace(/[&<>"']/g,c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[c]);
+const findProduct = id => products.find(p => p.id === id);
+
+/* ===== CARRINHO ===== */
+function loadCart() {
+  try {
+    const saved = JSON.parse(localStorage.getItem("saintx_cart_v1") || "[]");
+    if (!Array.isArray(saved)) return [];
+    // Descarta itens inválidos ou de produtos que não existem mais.
+    return saved.filter(i => i && findProduct(i.id)).map(i => ({
+      key:String(i.key), id:i.id, color:String(i.color || ""),
+      qty:Math.max(1,Math.min(99,parseInt(i.qty,10) || 1))
+    }));
+  } catch { return []; }
+}
+
+function saveCart() {
+  try { localStorage.setItem("saintx_cart_v1",JSON.stringify(cart)); }
+  catch { showToast("Não foi possível salvar o carrinho neste navegador."); }
+  updateCartCount();
+}
+
+function updateCartCount() {
+  $("#cartCount").textContent = cart.reduce((sum,item) => sum + item.qty,0);
+}
+
+function showToast(message) {
+  const toast = $("#toast");
+  toast.textContent = message;
+  toast.classList.add("show");
+  clearTimeout(toastTimeout);
+  toastTimeout = setTimeout(() => toast.classList.remove("show"),2600);
+}
+
+/* ===== SOM (Web Audio, sem arquivo): três notas graves e suaves ===== */
+let soundOn = true, audioCtx;
+try { soundOn = localStorage.getItem("saintx_sound") !== "off"; } catch {}
+
+function getAudio() {
+  try {
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return null;
+    audioCtx = audioCtx || new AC();
+    if (audioCtx.state === "suspended") audioCtx.resume();
+    return audioCtx;
+  } catch { return null; }
+}
+
+function chime() {
+  if (!soundOn) return;
+  const c = getAudio();
+  if (!c) return;
+  const t = c.currentTime, master = c.createGain(), lp = c.createBiquadFilter();
+  lp.type = "lowpass"; lp.frequency.value = 900; master.gain.value = 0.5;
+  lp.connect(master); master.connect(c.destination);
+  [[196,0],[293.66,.14],[392,.28]].forEach(([freq,delay]) => {
+    const osc = c.createOscillator(), gain = c.createGain();
+    osc.type = "sine"; osc.frequency.value = freq;
+    gain.gain.setValueAtTime(.0001,t + delay);
+    gain.gain.exponentialRampToValueAtTime(.06,t + delay + .45);
+    gain.gain.exponentialRampToValueAtTime(.0001,t + delay + 2.4);
+    osc.connect(gain); gain.connect(lp);
+    osc.start(t + delay); osc.stop(t + delay + 2.5);
+  });
+}
+
+const clickAudio = new Audio("click.mp3");
+function synthClick() { // reserva caso o click.mp3 não carregue
+  const c = getAudio(); if (!c) return;
+  const t = c.currentTime, o = c.createOscillator(), g = c.createGain();
+  o.frequency.setValueAtTime(900,t); o.frequency.exponentialRampToValueAtTime(520,t + .05);
+  g.gain.setValueAtTime(.18,t); g.gain.exponentialRampToValueAtTime(.0001,t + .07);
+  o.connect(g); g.connect(c.destination); o.start(t); o.stop(t + .08);
+}
+function playClick() {
+  if (!soundOn) return;
+  const a = clickAudio.cloneNode(); a.volume = .7;
+  a.play().catch(synthClick);
+}
+function setSound(on) {
+  soundOn = on;
+  try { localStorage.setItem("saintx_sound",on ? "on" : "off"); } catch {}
+  if (on) chime();
+}
+document.addEventListener("click",e => { if (e.target.closest("button,a,.product-card")) playClick(); });
+
+/* ===== MENU LATERAL, CONFIGURAÇÕES, CONTA E SUPORTE ===== */
+const SUPPORT_ENDPOINT = ""; // coloque aqui a URL do backend/IA de suporte (Zendesk, Tidio, etc.)
+function toggleDrawer(open) {
+  $("#drawer").classList.toggle("open",open);
+  $("#drawerShade").classList.toggle("open",open);
+}
+function openPanel(name) {
+  toggleDrawer(false);
+  const titles = {settings:"CONFIGURAÇÕES",account:"CONTA",support:"SUPORTE"};
+  $("#panelTitle").textContent = titles[name];
+  $("#panelBody").innerHTML = name === "settings" ? `
+      <label class="switch-row"><span>Som de clique e abertura</span>
+        <span class="switch"><input type="checkbox" id="soundToggle" ${soundOn ? "checked" : ""}><i></i></span></label>`
+    : name === "account" ? `
+      <button class="btn btn-primary" data-soon="Login de clientes">Entrar</button>
+      <button class="btn" data-soon="Cadastro de clientes">Criar conta de cliente</button>
+      <button class="btn" data-soon="Cadastro de vendedores com verificação">Quero vender (verificação de identidade)</button>
+      <p>Vendedores passam por verificação de documento, endereço, CPF/CNPJ, dados bancários e selfie antes de liberar ferramentas avançadas, como a geração de modelo 3D.</p>`
+    : `
+      <p>Escreva sua dúvida. Nossa IA responde e a equipe recebe um resumo por e-mail.</p>
+      <textarea id="supportText" placeholder="Digite sua dúvida..."></textarea>
+      <button class="btn btn-primary" id="supportSend">Enviar</button>`;
+  lastFocus = document.activeElement;
+  $("#panelOverlay").classList.add("open");
+  document.body.classList.add("locked");
+}
+async function sendSupport() {
+  const text = $("#supportText").value.trim();
+  if (!text) return;
+  if (!SUPPORT_ENDPOINT) return showToast("Suporte com IA ainda não conectado. Mensagem não enviada.");
+  try {
+    await fetch(SUPPORT_ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({message:text})});
+    $("#supportText").value = ""; showToast("Mensagem enviada.");
+  } catch { showToast("Não foi possível enviar agora."); }
+}
+$("#menuBtn").addEventListener("click",() => toggleDrawer(true));
+$("#drawerShade").addEventListener("click",() => toggleDrawer(false));
+document.addEventListener("click",e => {
+  const p = e.target.closest("[data-panel]"); if (p) openPanel(p.dataset.panel);
+  const soon = e.target.closest("[data-soon]"); if (soon) showToast(soon.dataset.soon + ": em breve (precisa de backend).");
+  if (e.target.id === "supportSend") sendSupport();
+});
+document.addEventListener("change",e => { if (e.target.id === "soundToggle") setSound(e.target.checked); });
+
+/* ===== NAVEGAÇÃO E LISTAGEM ===== */
+function goHome() {
+  activeCategory = "Todos";
+  $("#searchInput").value = "";
+  $("#sortSelect").value = "featured";
+  renderCategories();
+  renderProducts();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function selectCategory(category) {
+  activeCategory = category;
+  renderCategories();
+  renderProducts();
+  $("#catalog").scrollIntoView({behavior:"smooth",block:"start"});
+}
+
+function renderCategories() {
+  $("#categoryGrid").innerHTML = categories.map(c => `
+    <button class="category ${activeCategory === c.name ? "active" : ""}" data-cat="${safeText(c.name)}">
+      <span class="category-icon">${c.icon}</span>
+      <span class="category-name">${safeText(c.name)}</span>
+    </button>`).join("");
+}
+
+function getFilteredProducts() {
+  const term = $("#searchInput").value.trim().toLocaleLowerCase("pt-BR");
+  const list = products.filter(p => {
+    const inCategory = activeCategory === "Todos" || p.category === activeCategory;
+    const text = `${p.name} ${p.category} ${p.description}`.toLocaleLowerCase("pt-BR");
+    return inCategory && text.includes(term);
+  });
+  const sort = $("#sortSelect").value;
+  if (sort === "low") list.sort((a,b) => a.price - b.price);
+  if (sort === "high") list.sort((a,b) => b.price - a.price);
+  if (sort === "az") list.sort((a,b) => a.name.localeCompare(b.name,"pt-BR"));
+  return list;
+}
+
+function cardArt(p) {
+  if (!p.hero) return `<span class="emoji" aria-hidden="true">${p.emoji}</span>`;
+  return p.image ? `<img src="${safeText(p.image)}" alt="${safeText(p.name)}">` : DUALSENSE_SVG;
+}
+
+function renderProducts() {
+  const list = getFilteredProducts();
+  $("#catalogTitle").textContent = activeCategory === "Todos" ? "Produtos em destaque" : activeCategory;
+  $("#resultsText").textContent = `${list.length} ${list.length === 1 ? "produto encontrado" : "produtos encontrados"}.`;
+
+  if (!list.length) {
+    $("#productGrid").innerHTML = `
+      <div class="empty-state">
+        <div style="font-size:35px;margin-bottom:12px">⌕</div>
+        <strong>Nenhum produto encontrado</strong>
+        <p>Tente outro termo ou escolha uma categoria diferente.</p>
+        <button class="btn" onclick="goHome()">Limpar filtros</button>
+      </div>`;
+    return;
+  }
+
+  $("#productGrid").innerHTML = list.map(p => `
+    <article class="product-card ${p.hero ? "hero-card" : ""}" data-id="${p.id}">
+      <div class="product-art">
+        <span class="art-label">${safeText(p.tag || p.category)}</span>
+        ${cardArt(p)}
+      </div>
+      <div class="product-info">
+        <div class="product-category">${safeText(p.category)}</div>
+        <h3>${safeText(p.name)}</h3>
+        <div class="price">${money(p.price)}</div>
+        <div class="subprice">Preço demonstrativo</div>
+        <div class="product-buttons">
+          <button class="btn" data-open="${p.id}">Ver produto</button>
+          <button class="btn btn-primary" data-add="${p.id}">Adicionar +</button>
+        </div>
+      </div>
+    </article>`).join("");
+}
+
+/* ===== PRODUTO: bolinha → catálogo limpo + som ===== */
+function openProduct(id) {
+  const product = findProduct(id);
+  if (!product || opening) return;
+  opening = true;
+  getAudio(); // precisa nascer dentro do clique para o navegador liberar o som
+
+  const loader = $("#loader"), ball = loader.firstElementChild;
+  ball.style.animation = "none"; void ball.offsetWidth; ball.style.animation = "";
+  loader.classList.add("on");
+
+  // O catálogo abre por baixo da bolinha: o 3D já carrega enquanto ela pisca.
+  renderProduct(product);
+
+  setTimeout(() => {
+    loader.classList.remove("on");
+    chime();
+    opening = false;
+  },REDUCE_MOTION ? 200 : BLINK_MS);
+}
+
+function renderProduct(product) {
+  selectedProduct = product;
+  selectedColor = product.colors ? product.colors[0] : "";
+  lastFocus = document.activeElement;
+  $("#productOverlay").classList.add("open");
+  document.body.classList.add("locked");
+
+  const viewer = product.glb ? modelFileHTML(product) : product.model3d ? `
+    <div class="viewer-shell">
+      <div class="viewer-loading" id="viewerLoading">
+        <div class="spinner"></div>
+        <strong>Iniciando modelo 3D…</strong>
+        <span style="font-size:12px">Arraste para girar o produto.</span>
+      </div>
+      <iframe id="sketchfabFrame" title="${safeText(product.name)} — modelo 3D interativo"
+        src="${SKETCHFAB_EMBED}" allow="autoplay; fullscreen; xr-spatial-tracking"
+        allowfullscreen loading="eager" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+    </div>
+    <div class="viewer-links"><a href="${SKETCHFAB_PAGE}" target="_blank" rel="noopener noreferrer">Abrir modelo no Sketchfab ↗</a></div>
+  ` : `
+    <div class="viewer-shell" style="display:grid;place-items:center">
+      <div style="text-align:center;padding:25px">
+        <div style="font-size:90px">${product.emoji}</div>
+        <p style="color:#aaa;font-size:12px">Imagem ilustrativa do produto</p>
+      </div>
+    </div>`;
+
+  const colors = product.colors ? `
+    <span class="detail-label">Escolha a cor / variante</span>
+    <div class="swatches">
+      ${product.colors.map((color,i) => `
+        <button class="swatch ${i === 0 ? "active" : ""}" data-color="${safeText(color)}">${safeText(color)}</button>`).join("")}
+    </div>
+    <p class="disclaimer">As opções de cor são variantes do pedido. No modelo 3D, toque na parte de baixo do produto ou escolha uma cor aqui para pintar a carcaça.</p>` : "";
+
+  $("#productDetail").innerHTML = `
+    <div class="detail-visual">${viewer}</div>
+    <div class="detail-copy">
+      <div class="product-category">${safeText(product.category)}</div>
+      <h2>${safeText(product.name)}</h2>
+      <p class="detail-description">${safeText(product.description)}</p>
+      <div class="detail-price">${money(product.price)}</div>
+      <div class="disclaimer">Valor ilustrativo, ainda não conectado a estoque ou vendedor.</div>
+      ${colors}
+      <label class="detail-label" for="productQty">Quantidade</label>
+      <div class="quantity-row">
+        <input id="productQty" type="number" min="1" max="99" step="1" value="1" inputmode="numeric">
+        <span style="color:#aaa;font-size:12px">Máximo de 99 por pedido</span>
+      </div>
+      <button class="btn btn-primary add-button" onclick="addSelectedToCart()">Adicionar ao carrinho — ${money(product.price)}</button>
+      <p class="disclaimer">Este protótipo não processa pagamentos nem emite códigos digitais. A compra real precisa de checkout e backend seguros.</p>
+    </div>`;
+
+  hookModelViewer(product);
+  hookColorPick(product);
+  const frame = $("#sketchfabFrame"), loading = $("#viewerLoading");
+  if (frame && loading) frame.addEventListener("load",() => { loading.style.display = "none"; },{once:true});
+  $("#productOverlay .close-btn").focus({preventScroll:true});
+}
+
+/* ===== 3D RÁPIDO: arquivo .glb próprio + <model-viewer>, com Sketchfab de reserva ===== */
+function modelFileHTML(p) {
+  return `
+    <div class="viewer-shell" id="mvShell">
+      <div class="viewer-loading" id="viewerLoading">
+        <div class="spinner"></div>
+        <strong>Iniciando modelo 3D…</strong>
+        <span style="font-size:12px">Arraste para girar o produto.</span>
+      </div>
+      <model-viewer id="mv" src="${safeText(p.glb)}" alt="${safeText(p.name)} — modelo 3D"
+        camera-controls auto-rotate auto-rotate-delay="1500" touch-action="pan-y"
+        shadow-intensity="1" shadow-softness="1" exposure="1.05" environment-image="neutral"
+        interaction-prompt="none" loading="eager" reveal="auto"
+        ar ar-modes="webxr scene-viewer quick-look">
+        <div class="color-pop" id="colorPop"></div>
+        <div class="mv-progress" slot="progress-bar"><i id="mvBar"></i></div>
+      </model-viewer>
+    </div>`;
+}
+
+function sketchfabFallback(p) {
+  const box = $(".detail-visual");
+  if (!box || !selectedProduct || selectedProduct.id !== p.id) return;
+  box.innerHTML = `
+    <div class="viewer-shell">
+      <div class="viewer-loading" id="viewerLoading"><div class="spinner"></div><strong>Iniciando modelo 3D…</strong></div>
+      <iframe id="sketchfabFrame" title="${safeText(p.name)} — modelo 3D interativo" src="${SKETCHFAB_EMBED}"
+        allow="autoplay; fullscreen; xr-spatial-tracking" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+    </div>
+    <div class="viewer-links"><a href="${SKETCHFAB_PAGE}" target="_blank" rel="noopener noreferrer">Abrir modelo no Sketchfab ↗</a></div>`;
+  const frame = $("#sketchfabFrame"), loading = $("#viewerLoading");
+  frame.addEventListener("load",() => { loading.style.display = "none"; },{once:true});
+}
+
+function hookModelViewer(p) {
+  const mv = $("#mv");
+  if (!mv) return;
+  let done = false, last = Date.now();
+  const fail = () => { if (!done && p.model3d) { done = true; sketchfabFallback(p); } };
+  mv.addEventListener("progress",e => {
+    last = Date.now();
+    const bar = $("#mvBar");
+    if (bar) bar.style.width = Math.round(e.detail.totalProgress * 100) + "%";
+  });
+  mv.addEventListener("load",() => {
+    done = true;
+    const loading = $("#viewerLoading");
+    if (loading) loading.style.display = "none";
+  },{once:true});
+  mv.addEventListener("error",fail,{once:true});
+  // Biblioteca bloqueada ou fora do ar: troca logo para o Sketchfab.
+  setTimeout(() => { if (!customElements.get("model-viewer")) fail(); },4000);
+  // Download travado (sem progresso por 12s): também usa a reserva.
+  const watch = setInterval(() => {
+    if (done || !selectedProduct) return clearInterval(watch);
+    if (Date.now() - last > 12000) { clearInterval(watch); fail(); }
+  },2000);
+}
+
+// Aquece o arquivo antes do clique (toque/passar o mouse e, ocioso, o destaque).
+const warmed = new Set();
+function warm(id) {
+  const p = findProduct(id);
+  if (!p || !p.glb || warmed.has(id)) return;
+  warmed.add(id);
+  fetch(p.glb).catch(() => {});
+}
+document.addEventListener("pointerover",e => {
+  const card = e.target.closest && e.target.closest(".product-card");
+  if (card) warm(card.dataset.id);
+},{passive:true});
+(window.requestIdleCallback || setTimeout)(() => products.filter(p => p.hero).forEach(p => warm(p.id)));
+
+function chooseColor(button,color) {
+  selectedColor = color;
+  document.querySelectorAll(".swatch").forEach(item => item.classList.toggle("active",item === button));
+  paintModel(color);
+}
+
+/* Cor do modelo: só a carcaça clara muda; botões e detalhes escuros ficam. */
+let shellMats = null, tweenId = 0;
+const hexToRgb = h => [1,3,5].map(i => parseInt(h.slice(i,i + 2),16) / 255);
+function paintModel(color) {
+  const mv = $("#mv"), hex = selectedProduct && selectedProduct.hex && selectedProduct.hex[color];
+  if (!mv || !mv.model || !hex) return;
+  if (!shellMats) shellMats = mv.model.materials.filter(m => {
+    const [r,g,b] = m.pbrMetallicRoughness.baseColorFactor;
+    return r > .75 && g > .75 && b > .75 && !(g > .95 && b < .4); // claras, exceto o verde-limão
+  });
+  const from = shellMats.map(m => m.pbrMetallicRoughness.baseColorFactor.slice(0,3)), to = hexToRgb(hex);
+  const start = performance.now(), DUR = 350, id = ++tweenId; // tempo real: igual em 60/120/144Hz
+  (function step(now) {
+    if (id !== tweenId) return;
+    const k = Math.min((now - start) / DUR,1), e = 1 - Math.pow(1 - k,3);
+    shellMats.forEach((m,i) => m.pbrMetallicRoughness.setBaseColorFactor([0,1,2].map(c => from[i][c] + (to[c] - from[i][c]) * e).concat(1)));
+    if (k < 1) requestAnimationFrame(step);
+  })(start);
+}
+
+/* Tocar na parte de baixo do produto abre a paleta de cores. */
+function hookColorPick(p) {
+  const mv = $("#mv"), pop = $("#colorPop");
+  if (!mv || !pop || !p.colors) return;
+  shellMats = null;
+  pop.innerHTML = p.colors.map(c => `<button data-pick="${safeText(c)}" aria-label="${safeText(c)}" style="background:${p.hex[c]}"></button>`).join("");
+  let down = null;
+  mv.addEventListener("pointerdown",e => { down = [e.clientX,e.clientY]; });
+  mv.addEventListener("pointerup",e => {
+    if (!down || Math.hypot(e.clientX - down[0],e.clientY - down[1]) > 6) return; // arrastar = girar, não clicar
+    const r = mv.getBoundingClientRect(), hit = mv.positionAndNormalFromPoint(e.clientX - r.left,e.clientY - r.top);
+    if (!hit) return pop.classList.remove("open");
+    const c = mv.getBoundingBoxCenter(), d = mv.getDimensions();
+    if (hit.position.y < c.y - d.y * .2) { // ~30% inferior do modelo
+      pop.style.left = (e.clientX - r.left) + "px"; pop.style.top = (e.clientY - r.top) + "px";
+      pop.classList.add("open");
+    } else pop.classList.remove("open");
+  });
+  pop.addEventListener("click",e => {
+    const b = e.target.closest("[data-pick]"); if (!b) return;
+    const sw = [...document.querySelectorAll(".swatch")].find(s => s.dataset.color === b.dataset.pick);
+    if (sw) chooseColor(sw,b.dataset.pick);
+    pop.querySelectorAll("button").forEach(x => x.classList.toggle("active",x === b));
+    pop.classList.remove("open");
+  });
+}
+
+function addSelectedToCart() {
+  if (!selectedProduct) return;
+  const qty = Math.max(1,Math.min(99,parseInt($("#productQty").value,10) || 1));
+  addToCart(selectedProduct.id,qty,selectedColor);
+  closeOverlay("productOverlay");
+  showToast("Produto adicionado ao carrinho.");
+}
+
+function quickAdd(id) {
+  const product = findProduct(id);
+  if (!product) return;
+  addToCart(id,1,product.colors ? product.colors[0] : "");
+  showToast("Produto adicionado ao carrinho.");
+}
+
+function addToCart(id,qty,color) {
+  if (!findProduct(id)) return;
+  const key = `${id}::${color || ""}`;
+  const existing = cart.find(item => item.key === key);
+  if (existing) existing.qty = Math.min(99,existing.qty + qty);
+  else cart.push({key,id,qty,color:color || ""});
+  saveCart();
+}
+
+function showCart() {
+  renderCart();
+  lastFocus = document.activeElement;
+  $("#cartOverlay").classList.add("open");
+  document.body.classList.add("locked");
+  $("#cartOverlay .close-btn").focus({preventScroll:true});
+}
+
+function renderCart() {
+  const body = $("#cartBody");
+  if (!cart.length) {
+    body.innerHTML = `
+      <div class="empty-state" style="padding:35px 10px">
+        <div style="font-size:40px;margin-bottom:12px">🛒</div>
+        <strong>Seu carrinho está vazio</strong>
+        <p>Explore o catálogo e adicione seus produtos favoritos.</p>
+        <button class="btn btn-primary" onclick="closeOverlay('cartOverlay');goHome()">Explorar produtos</button>
+      </div>`;
+    return;
+  }
+
+  let total = 0;
+  const lines = cart.map(item => {
+    const product = findProduct(item.id);
+    total += product.price * item.qty;
+    return `
+      <div class="cart-line">
+        <div class="cart-thumb">${product.emoji}</div>
+        <div>
+          <h4>${safeText(product.name)}</h4>
+          <p>Qtd.: ${item.qty}${item.color ? " · " + safeText(item.color) : ""}</p>
+          <button class="remove-item" data-remove="${safeText(item.key)}">Remover</button>
+        </div>
+        <div class="line-price">${money(product.price * item.qty)}</div>
+      </div>`;
+  }).join("");
+
+  body.innerHTML = `
+    ${lines}
+    <div class="cart-total"><span>Total demonstrativo</span><span>${money(total)}</span></div>
+    <p class="cart-note">Este é um carrinho local de demonstração. Nenhuma compra será cobrada e nenhum pedido será enviado.</p>
+    <div class="cart-actions">
+      <button class="btn" onclick="clearCart()">Esvaziar</button>
+      <button class="btn btn-primary" onclick="demoCheckout()">Continuar</button>
+    </div>`;
+}
+
+function removeFromCart(key) {
+  cart = cart.filter(item => item.key !== key);
+  saveCart();
+  renderCart();
+}
+
+function clearCart() {
+  cart = [];
+  saveCart();
+  renderCart();
+  showToast("Carrinho esvaziado.");
+}
+
+function demoCheckout() {
+  showToast("Checkout ainda não configurado. Nenhuma cobrança foi feita.");
+}
+
+function closeOverlay(id) {
+  const overlay = document.getElementById(id);
+  if (!overlay || !overlay.classList.contains("open")) return;
+
+  if (id === "panelOverlay") $("#panelBody").innerHTML = "";
+  if (id === "productOverlay") {
+    // about:blank libera os recursos do visualizador 3D.
+    const frame = $("#sketchfabFrame");
+    if (frame) frame.src = "about:blank";
+    selectedProduct = null;
+    $("#productDetail").innerHTML = ""; // libera o WebGL do 3D
+  }
+
+  overlay.classList.remove("open");
+  if (!document.querySelector(".overlay.open")) document.body.classList.remove("locked");
+  if (lastFocus && lastFocus.isConnected) lastFocus.focus({preventScroll:true});
+}
+
+/* ===== EVENTOS ===== */
+document.addEventListener("click",event => {
+  const t = event.target;
+  const overlay = t.matches("[data-overlay]") ? t : null;
+  if (overlay) return closeOverlay(overlay.id);
+
+  const close = t.closest("[data-close]");
+  if (close) return closeOverlay(close.dataset.close);
+  const add = t.closest("[data-add]");
+  if (add) return quickAdd(add.dataset.add);
+  const open = t.closest("[data-open]");
+  if (open) return openProduct(open.dataset.open);
+  const cat = t.closest("[data-cat]");
+  if (cat) return selectCategory(cat.dataset.cat);
+  const remove = t.closest("[data-remove]");
+  if (remove) return removeFromCart(remove.dataset.remove);
+  const swatch = t.closest("[data-color]");
+  if (swatch) return chooseColor(swatch,swatch.dataset.color);
+
+  // Clicar em qualquer ponto do card também abre o produto.
+  const card = t.closest(".product-card");
+  if (card) openProduct(card.dataset.id);
+});
+
+document.addEventListener("keydown",event => {
+  if (event.key === "Escape") {
+    closeOverlay("cartOverlay");
+    closeOverlay("panelOverlay");
+    closeOverlay("productOverlay");
+    toggleDrawer(false);
+  }
+});
+
+$("#searchInput").addEventListener("input",renderProducts);
+$("#sortSelect").addEventListener("change",renderProducts);
+
+$("#year").textContent = new Date().getFullYear();
+renderCategories();
+renderProducts();
+updateCartCount();
+</script>
+</body>
+</html>
